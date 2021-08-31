@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState,} from 'react';
 import axiosApi from "../../axiosApi";
+import {useHistory} from "react-router-dom";
 
 import Spinner from "../../components/UI/Spinner/Spinner";
 import './Admin.css';
@@ -16,6 +17,8 @@ const Admin = () => {
             setPages(pages);
         })();
     }, []);
+
+    const history = useHistory();
 
     const getPages = async () => {
         const response = await axiosApi.get('pages.json');
@@ -49,14 +52,33 @@ const Admin = () => {
         }));
     };
 
+    const sendUpdatePageRequest = async () => {
+        await axiosApi.put('/pages/' + selectedPage + '.json', {
+            title: selectedPageInfo.title,
+            content: selectedPageInfo.content
+        });
+    };
+
+    const handleFormSubmit = async e => {
+        e.preventDefault();
+        setLoading(true);
+
+        try {
+            await sendUpdatePageRequest();
+            history.replace('/pages/' + selectedPage);
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
     return (
         loading
             ?
             <Spinner />
             :
             <div className="Page Admin">
-                <h2>Edit pages</h2>
-                <form>
+                <h2 className="Title">Edit pages</h2>
+                <form onSubmit={e => handleFormSubmit(e)}>
                     <label>
                         <p>Select page</p>
                         <select
@@ -75,24 +97,30 @@ const Admin = () => {
                             ))}
                         </select>
                     </label>
-                    <label>
-                        <p>Title</p>
-                        <input
-                            type="text"
-                            name="title"
-                            value={selectedPageInfo.title || ''}
-                            onChange={e => handleInputChange(e)}
-                        />
-                    </label>
-                    <label>
-                        <p>Content</p>
-                        <textarea
-                            name="content"
-                            value={selectedPageInfo.content || ''}
-                            onChange={e => handleInputChange(e)}
-                        />
-                    </label>
-                    <button>Save</button>
+                    {selectedPage
+                        ?
+                        <>
+                            <label>
+                                <p>Title</p>
+                                <input
+                                    type="text"
+                                    name="title"
+                                    value={selectedPageInfo.title || ''}
+                                    onChange={e => handleInputChange(e)}
+                                />
+                            </label>
+                            <label>
+                                <p>Content</p>
+                                <textarea
+                                    name="content"
+                                    value={selectedPageInfo.content || ''}
+                                    onChange={e => handleInputChange(e)}
+                                />
+                            </label>
+                            <button>Save</button>
+                        </>
+                        :
+                        null}
                 </form>
             </div>
     );

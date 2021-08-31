@@ -1,3 +1,20 @@
+.Admin .Title {
+    text-align: center;
+}
+
+.Admin select {
+    min-width: 200px;
+}
+
+.Admin input,
+.Admin textarea {
+    width: 100%;
+}
+
+.Admin textarea {
+    min-height: 100px;
+}
+
 .Admin button {
     display: block;
 }
