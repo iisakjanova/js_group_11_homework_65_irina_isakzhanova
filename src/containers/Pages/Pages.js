@@ -24,7 +24,8 @@ const Pages = ({match}) => {
     }, [match.params.id]);
 
     const getPage = async () => {
-        const response = await axiosApi('/pages/' + match.params.id + '.json');
+        const id = match.params.id || 'about';
+        const response = await axiosApi('/pages/' + id + '.json');
         return response.data;
     };
 
