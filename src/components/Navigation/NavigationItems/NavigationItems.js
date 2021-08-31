@@ -9,14 +9,19 @@ const NavigationItems = () => {
 
     useEffect(() => {
         (async () => {
-            const data = await getPages();
-            const pageTitles = {};
+            try {
+                const data = await getPages();
+                const pageTitles = {};
 
-            Object.keys(data).forEach(key => {
-                const {content, ...rest} = data[key];
-                pageTitles[key] = rest;
-            });
-            setPageTitles(pageTitles);
+                Object.keys(data).forEach(key => {
+                    const {content, ...rest} = data[key];
+                    pageTitles[key] = rest;
+                });
+
+                setPageTitles(pageTitles);
+            } catch (e) {
+                console.log(e);
+            }
         })();
     }, []);
 

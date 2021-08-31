@@ -2,14 +2,24 @@ import React, {useEffect, useState} from 'react';
 import axiosApi from "../../axiosApi";
 
 import './Pages.css';
+import Spinner from "../../components/UI/Spinner/Spinner";
 
 const Pages = ({match}) => {
     const [page, setPage] = useState('');
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         (async () => {
-            const page = await getPage();
-            setPage(page);
+            setLoading(true);
+
+            try {
+                const page = await getPage();
+                setPage(page);
+            } catch (e) {
+                console.log(e);
+            } finally {
+                setLoading(false);
+            }
         })();
     }, [match.params.id]);
 
@@ -19,10 +29,14 @@ const Pages = ({match}) => {
     };
 
     return (
-        <div className="Page">
-            <h2 className="Title">{page.title}</h2>
-            <p className="Content">{page.content}</p>
-        </div>
+        loading
+            ?
+            <Spinner />
+            :
+            <div className="Page">
+                <h2 className="Title">{page.title}</h2>
+                <p className="Content">{page.content}</p>
+            </div>
     );
 };
 
