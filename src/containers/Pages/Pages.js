@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import axiosApi from "../../axiosApi";
 
-import './Pages.css';
 import Spinner from "../../components/UI/Spinner/Spinner";
+import './Pages.css';
 
 const Pages = ({match}) => {
     const [page, setPage] = useState('');
