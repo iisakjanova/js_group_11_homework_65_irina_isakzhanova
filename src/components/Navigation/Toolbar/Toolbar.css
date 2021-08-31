@@ -1,0 +1,13 @@
+.Toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    border-bottom: 2px solid grey;
+}
+
+.Toolbar h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 500;
+}

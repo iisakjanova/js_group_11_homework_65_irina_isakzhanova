@@ -1,0 +1,11 @@
+.NavigationItem a {
+    padding: 0 20px;
+    display: block;
+}
+
+.NavigationItem a:hover,
+.NavigationItem a:active,
+.NavigationItem a.active {
+    color: black;
+    text-decoration: none;
+}
