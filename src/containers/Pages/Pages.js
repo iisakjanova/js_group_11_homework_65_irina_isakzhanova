@@ -15,6 +15,7 @@ const Pages = ({match}) => {
             try {
                 const page = await getPage();
                 setPage(page);
+
             } catch (e) {
                 console.log(e);
             } finally {
@@ -36,7 +37,7 @@ const Pages = ({match}) => {
             :
             <div className="Page">
                 <h2 className="Title">{page.title}</h2>
-                <p className="Content">{page.content}</p>
+                <div className="Content" dangerouslySetInnerHTML={{ __html: page.content }} />
             </div>
     );
 };

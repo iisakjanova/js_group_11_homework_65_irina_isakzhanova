@@ -1,8 +1,10 @@
 import React, {useEffect, useState,} from 'react';
 import axiosApi from "../../axiosApi";
 import {useHistory} from "react-router-dom";
+import ReactQuill from 'react-quill';
 
 import Spinner from "../../components/UI/Spinner/Spinner";
+import 'react-quill/dist/quill.snow.css';
 import './Admin.css';
 
 const Admin = () => {
@@ -44,11 +46,18 @@ const Admin = () => {
         }
     };
 
-    const handleInputChange = e => {
+    const handleTitleChange = e => {
         const {name, value} = e.target;
         setSelectedPageInfo(prev => ({
             ...prev,
             [name]: value
+        }));
+    };
+
+    const handleContentChange = value => {
+        setSelectedPageInfo(prev => ({
+            ...prev,
+            content: value
         }));
     };
 
@@ -106,15 +115,15 @@ const Admin = () => {
                                     type="text"
                                     name="title"
                                     value={selectedPageInfo.title || ''}
-                                    onChange={e => handleInputChange(e)}
+                                    onChange={e => handleTitleChange(e)}
                                 />
                             </label>
                             <label>
                                 <p>Content</p>
-                                <textarea
-                                    name="content"
+                                <ReactQuill
+                                    theme="snow"
                                     value={selectedPageInfo.content || ''}
-                                    onChange={e => handleInputChange(e)}
+                                    onChange={value => handleContentChange(value)}
                                 />
                             </label>
                             <button>Save</button>
